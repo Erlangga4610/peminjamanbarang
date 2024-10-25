@@ -1,14 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Livewire\Dashboard;
 use App\Livewire\Login;
 use App\Livewire\Register;
-use Illuminate\Support\Facades\Auth;
+
 
 // Route untuk halaman utama
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 // Kelompokkan rute yang memerlukan autentikasi
