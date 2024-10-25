@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 use App\Livewire\Dashboard;
+use App\Livewire\Login;
 
 // Route untuk halaman utama
 Route::get('/', function () {
@@ -10,3 +11,5 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', Dashboard::class);
+
+Route::get('/login',Login::class);
