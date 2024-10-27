@@ -12,6 +12,7 @@
   </nav>
 </div><!-- End Page Title -->
 
+@can('role-view')
 <section class="section">
   <div class="row">
     <div class="col-lg-6">
@@ -25,6 +26,7 @@
 
     </div>
 
+    
     <div class="col-lg-6">
 
       <div class="card">
@@ -33,10 +35,11 @@
           <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
         </div>
       </div>
-
     </div>
   </div>
 </section>
+@endcan
+
 
 </main><!-- End #main -->
 </div>
