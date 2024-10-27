@@ -38,7 +38,7 @@
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
          
           <li>
-            <a href="components-buttons.html">
+            <a href="{{ url('/permission')}}">
               <i class="bi bi-circle"></i><span>Permission</span>
             </a>
           </li>

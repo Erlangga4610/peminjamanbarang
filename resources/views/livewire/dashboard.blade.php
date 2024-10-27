@@ -1,6 +1,5 @@
 <div>
-<main id="main" class="main">
-
+  
 <div class="pagetitle">
   <h1>Dashboard</h1>
   <nav>
@@ -12,7 +11,6 @@
   </nav>
 </div><!-- End Page Title -->
 
-@can('role-view')
 <section class="section">
   <div class="row">
     <div class="col-lg-6">
@@ -38,8 +36,4 @@
     </div>
   </div>
 </section>
-@endcan
-
-
-</main><!-- End #main -->
 </div>

@@ -6,7 +6,6 @@ use App\Livewire\Dashboard;
 use App\Livewire\Login;
 use App\Livewire\Register;
 
-
 // Route untuk halaman utama
 Route::get('/', function () {
     return redirect()->route('login');
@@ -15,6 +14,7 @@ Route::get('/', function () {
 // Kelompokkan rute yang memerlukan autentikasi
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', Dashboard::class);
+    Route::get('/permission', App\Livewire\Permission\Index::class);
 
     Route::post('/logout', function () {
         Auth::logout();
