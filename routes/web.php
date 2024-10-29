@@ -2,9 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Livewire\Dashboard;
 use App\Livewire\Login;
-use App\Livewire\Register;
+
 
 // Route untuk halaman utama
 Route::get('/', function () {
@@ -13,7 +12,7 @@ Route::get('/', function () {
 
 // Kelompokkan rute yang memerlukan autentikasi
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', Dashboard::class);
+    Route::get('/dashboard', App\Livewire\Dashboard::class);
     Route::get('/permission', App\Livewire\Permission\Index::class);
 
     Route::post('/logout', function () {
@@ -25,5 +24,5 @@ Route::middleware(['auth'])->group(function () {
 // Kelompokkan rute yang tidak memerlukan autentikasi (login dan register)
 Route::group([], function () {
     Route::get('/login', Login::class)->name('login');
-    Route::get('/register', Register::class);
+    Route::get('/register', App\Livewire\Register::class);
 });

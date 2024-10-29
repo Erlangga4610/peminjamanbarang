@@ -23,7 +23,8 @@ class Index extends Component
     public $search = ''; //untuk search data
     public $modal_title = "Tambah Permission";
     protected $listeners = ['resetForm' => 'resetInputFields'];// Mendengarkan event 'resetForm' dan menjalankan metode 'resetInputFields' saat event dipicu.
-
+    public $sortBy = 'name'; // Default sort column
+    public $sortDirection = 'asc'; // Default sort direction
 
     public function create()
     {
@@ -67,8 +68,10 @@ class Index extends Component
             'guard_name' => 'required|string|min:3|max:255',
         ]);
 
+        // Periksa apakah ID izin telah diatur (menunjukkan izin mana yang akan diperbarui).
         if ($this->permissionId) {
             $permission = Permission::find($this->permissionId);
+            // Jika izin tersebut ada, perbarui dengan data yang telah divalidasi.
             if ($permission) {
                 $permission->update($validatedData);
                 session()->flash('message', 'Permission updated successfully.');
@@ -89,6 +92,15 @@ class Index extends Component
         $this->dispatch('close-modal');
     }
 
+    public function destroy(){
+        // dd($this->permissionId);
+        Permission::destroy($this->permissionId);
+
+        session()->flash('message', 'Permission delete successfully.');
+        $this->dispatch('close-modal');
+    }
+
+
     public function resetInputFields()
     {
         $this->name = '';
@@ -103,11 +115,24 @@ class Index extends Component
         $this->resetPage();
     }
 
+    public function sort($column)
+    {
+        if ($this->sortBy === $column) {
+            // Jika sudah diurutkan berdasarkan kolom ini, ubah arah pengurutan
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            // Urutkan berdasarkan kolom baru
+            $this->sortBy = $column;
+            $this->sortDirection = 'asc'; //Rset Ke Urutan naik pada kolom baru
+        }
+    }
+
     public function render()
     {
         // membuat kueri dengan kondisi pencarian
         $permissions = Permission::where('name', 'like', '%' . $this->search . '%')
                                 ->orWhere('guard_name', 'like', '%' . $this->search . '%')
+                                ->orderBy($this->sortBy, $this->sortDirection)
                                 ->paginate(5);
     
         return view('livewire.permission.index', compact('permissions'));

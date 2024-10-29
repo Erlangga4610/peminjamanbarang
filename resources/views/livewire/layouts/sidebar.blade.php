@@ -45,7 +45,7 @@
           </li>
           <li>
             <a href="components-cards.html">
-              <i class="bi bi-circle"></i><span>Cards</span>
+              <i class="bi bi-circle"></i><span>Give Permission</span>
             </a>
           </li>
           

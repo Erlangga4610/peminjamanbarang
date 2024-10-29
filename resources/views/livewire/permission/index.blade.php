@@ -37,8 +37,18 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Guard Name</th>
+                <th scope="col" wire:click="sort('name')" style="cursor: pointer;">
+                    Name
+                    @if ($sortBy === 'name')
+                        <span>{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                    @endif
+                </th>
+                <th scope="col" wire:click="sort('guard_name')" style="cursor: pointer;">
+                    Guard Name
+                    @if ($sortBy === 'guard_name')
+                        <span>{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                    @endif
+                </th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -49,17 +59,14 @@
                     <td>{{ $permission->name }}</td>
                     <td>{{ $permission->guard_name }}</td>
                     <td>
-                        <button 
-                            wire:click="edit({{ $permission->id }})" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit
-                        </button>
-                        <button
-                            type="button" wire:click="delete({{$permission->id}})" class="btn btn-sm btn-danger" wire:confirm="Are you sure you want to delete this post?">Delete 
-                        </button>
+                        <button wire:click="edit({{ $permission->id }})" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+                        <button type="button" wire:click="delete({{$permission->id}})" class="btn btn-sm btn-danger" wire:confirm="Are you sure you want to delete this {{$permission->name}}?">Delete</button>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+    
 
     <div>
         {{ $permissions->links() }}
@@ -75,6 +82,7 @@
                 </div>
                 <form wire:submit.prevent="{{ $mode == 'create' ? 'store' : 'update' }}">
                     <div class="modal-body">
+                        @if ($this->mode != "delete")
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama Permission</label>
                             <input type="text" class="form-control" id="name" wire:model="name" required>
@@ -83,14 +91,24 @@
                             <label for="guard_name" class="form-label">Guard Name</label>
                             <input type="text" class="form-control" id="guard_name" wire:model="guard_name" required>
                         </div>
+                        @else
+                        <p>Apakah yakin hapus permission {{ $this->name }}?</p>
+                        @endif
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        @if ($mode != "delete")
+                        @if ($this->mode != "delete")
                         <button type="reset" class="btn btn-warning">Reset</button>
                         @endif
-                        <button class="btn btn-primary">{{ $mode == "create" ? 'Save' : 'Update' }}</button>
+                        @if ($this->mode == "create")
+                        <button class="btn btn-primary">Save</button>
+                        @elseif($this->mode == "edit")
+                        <button class="btn btn-primary">Update</button>
+                        @else
+                        <button wire:click="destroy" class="btn btn-primary">Delete</button>
+                        @endif
                     </div>
+                    
                 </form>
             </div>
         </div>
@@ -102,10 +120,6 @@
                 $('#exampleModal').modal('hide');
                 Livewire.emit('resetForm');
             });
-        });
-
-        Livewire.on('modalClosed', () => {
-            Livewire.emit('resetForm');
         });
     </script>
 </div>
