@@ -92,6 +92,14 @@ class Index extends Component
         $this->dispatch('close-modal');
     }
 
+    public function confirmDelete($id)
+    {
+        $this->permissionId = $id; //menyimpan izin yang akan dihapus
+        $permission = Permission::find($id);
+        $this->name = $permission ? $permission->name : '';//ambil nama izin untuk konfirmasi
+    }
+
+
     public function destroy(){
         // dd($this->permissionId);
         Permission::destroy($this->permissionId);

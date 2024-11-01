@@ -25,7 +25,7 @@
     </div>
     @endif
 
-    <button type="button" class="btn mb-3 btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" wire:click="create">
+    <button type="button" class="btn mb-3 btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#formModal" wire:click="create">
         Tambah Permission
     </button>
 
@@ -59,30 +59,32 @@
                     <td>{{ $permission->name }}</td>
                     <td>{{ $permission->guard_name }}</td>
                     <td>
-                        <button wire:click="edit({{ $permission->id }})" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
-                        <button type="button" wire:click="delete({{$permission->id}})" class="btn btn-sm btn-danger" wire:confirm="Are you sure you want to delete this {{$permission->name}}?">Delete</button>
+                        <button wire:click="edit({{ $permission->id }})" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">
+                            Edit
+                        </button>
+                        <button type="button" wire:click="confirmDelete({{$permission->id}})" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            Delete
+                        </button>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-    
 
     <div>
         {{ $permissions->links() }}
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Form Modal Create dan Edit-->
+    <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ $modal_title }}</h5>
+                    <h5 class="modal-title" id="formModalLabel">{{ $modal_title }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form wire:submit.prevent="{{ $mode == 'create' ? 'store' : 'update' }}">
                     <div class="modal-body">
-                        @if ($this->mode != "delete")
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama Permission</label>
                             <input type="text" class="form-control" id="name" wire:model="name" required>
@@ -91,25 +93,34 @@
                             <label for="guard_name" class="form-label">Guard Name</label>
                             <input type="text" class="form-control" id="guard_name" wire:model="guard_name" required>
                         </div>
-                        @else
-                        <p>Apakah yakin hapus permission {{ $this->name }}?</p>
-                        @endif
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        @if ($this->mode != "delete")
                         <button type="reset" class="btn btn-warning">Reset</button>
-                        @endif
-                        @if ($this->mode == "create")
-                        <button class="btn btn-primary">Save</button>
-                        @elseif($this->mode == "edit")
-                        <button class="btn btn-primary">Update</button>
-                        @else
-                        <button wire:click="destroy" class="btn btn-primary">Delete</button>
-                        @endif
+                        <button type="submit" class="btn btn-primary">
+                            {{ $mode == 'create' ? 'Save' : 'Update' }}
+                        </button>
                     </div>
-                    
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus permission "{{ $name }}"?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button wire:click="destroy" class="btn btn-danger">Hapus</button>
+                </div>
             </div>
         </div>
     </div>
@@ -117,7 +128,8 @@
     <script>
         document.addEventListener('livewire:init', () => {
             Livewire.on('close-modal', () => {
-                $('#exampleModal').modal('hide');
+                $('#formModal').modal('hide');
+                $('#deleteModal').modal('hide');
                 Livewire.emit('resetForm');
             });
         });
