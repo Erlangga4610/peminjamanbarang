@@ -43,9 +43,9 @@
 
 <body>
 
-  @include('livewire.layouts.header')
+  @include('components.layouts.header')
 
-  @include('livewire.layouts.sidebar')
+  @include('components.layouts.sidebar')
 
   <main id="main" class="main">
 
@@ -54,7 +54,7 @@
 
   </main><!-- End #main -->
 
-  @include('livewire.layouts.footer')
+  @include('components.layouts.footer')
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

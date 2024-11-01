@@ -3,15 +3,15 @@
         <h1>Permissions</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a wire:navigate href="{{ '/dashboard' }}">Home</a></li>
-                <li class="breadcrumb-item"><a wire:navigate href="{{ url('/permission')}}">Permissions</a></li>
+                <li class="breadcrumb-item"><a wire:click href="{{ '/dashboard' }}">Home</a></li>
+                <li class="breadcrumb-item"><a wire:click href="{{ url('/permission')}}">Permissions</a></li>
             </ol>
         </nav>
     </div>
 
     @if (session()->has('message'))
     <div class="toast-container top-0 end-0 p-3">
-        <div class="toast show fade bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true" id="liveToast">
+        <div class="toast show fade bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true" id="liveToast" data-bs-delay="3000">
             <div class="toast-body">
                 <div class="d-flex gap-4">
                     <span><i class="fa-solid fa-circle-check fa-lg"></i></span>
@@ -25,9 +25,11 @@
     </div>
     @endif
 
+    {{-- @can('role-create') --}}
     <button type="button" class="btn mb-3 btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#formModal" wire:click="create">
         Tambah Permission
     </button>
+    {{-- @endcan --}}
 
     <div class="mb-1">
         <input type="text" class="form-control" name="query" placeholder="Cari Role Permission" wire:model.live.debounce.100ms="search">

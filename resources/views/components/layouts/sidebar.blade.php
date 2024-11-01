@@ -6,7 +6,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{('/dashboard')}}">
-          <i class="bi bi-grid"></i>
+          <i class="bi bi-speedometer"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
@@ -34,18 +34,18 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Role Permission</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-people"></i><span>Role </span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
          
           <li>
             <a href="{{ url('/permission')}}">
-              <i class="bi bi-circle"></i><span>Permission</span>
+              <i class="bi bi-lock"></i><span>Permission</span>
             </a>
           </li>
           <li>
             <a href="components-cards.html">
-              <i class="bi bi-circle"></i><span>Give Permission</span>
+              <i class="bi bi-person-check"></i><span>Akses Role</span>
             </a>
           </li>
           
@@ -54,7 +54,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-register.html">
-          <i class="bi bi-card-list"></i>
+          <i class="bi bi-person-plus"></i>
           <span>Register</span>
         </a>
       </li><!-- End Register Page Nav -->

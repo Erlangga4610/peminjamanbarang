@@ -52,5 +52,5 @@ class RoleSeeder extends Seeder
 //buat user
 //buat role
 //give role to user
-//create permission
+//create permission 
 //give permission to role
