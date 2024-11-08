@@ -44,7 +44,7 @@
             </a>
           </li>
           <li>
-            <a href="components-cards.html">
+            <a href="{{url('/role-permission')}}">
               <i class="bi bi-person-check"></i><span>Akses Role</span>
             </a>
           </li>
