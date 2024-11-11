@@ -11,6 +11,7 @@ class UserRole extends Component
     public $user_name, $user_email;
     public $roles;
     public $isEdit = false;  // Untuk mode edit atau create
+    public $selectedUserId = null;  // Menyimpan ID user yang akan dihapus role-nya
 
     protected $rules = [
         'role_id' => 'required',  // Validasi untuk role yang dipilih
@@ -68,13 +69,21 @@ class UserRole extends Component
     }
 
     // Method untuk menghapus role pada user
-    public function deleteRole($userId)
+    public function confirmDeleteRole($userId)
     {
+        $this->selectedUserId = $userId;
         $user = User::find($userId);
+        $this->user_name = $user->name;  // Menyimpan nama user untuk konfirmasi
+    }
+
+    public function removeRoleFromUser()
+    {
+        $user = User::find($this->selectedUserId);
         if ($user) {
             $user->removeRole($user->roles->first());  // Menghapus role yang sudah diberikan
             session()->flash('message', 'Role removed from user successfully.');
             $this->users = User::all();  // Refresh data user
+            $this->dispatch('close-modal');  // Emit event untuk menutup modal
         }
     }
 
