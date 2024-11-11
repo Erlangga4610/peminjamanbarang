@@ -13,7 +13,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', App\Livewire\Dashboard::class);
     Route::get('/permission', App\Livewire\Permission\Index::class);
     Route::get('/role-permission', App\Livewire\Permission\RolePermission::class);
-
+    Route::get('/user-role', App\Livewire\Permission\UserRole::class);
 
 
     Route::post('/logout', function () {

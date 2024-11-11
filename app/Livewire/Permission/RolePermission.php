@@ -48,7 +48,7 @@ class RolePermission extends Component
     {
         $this->validate([
             'role_name' => 'required|unique:roles,name',
-            'guard_name' => 'required|string|min:3|max:255',
+            'guard_name' => 'required|string|min:1|max:3',
         ]);
 
         // Membuat role
@@ -91,7 +91,7 @@ class RolePermission extends Component
     {
         $this->validate([
             'role_name' => 'required|unique:roles,name,' . $this->role_id,
-            'guard_name' => 'required|string|min:3|max:255',
+            'guard_name' => 'required|string|min:1|max:3',
         ]);
 
         // Menemukan role berdasarkan ID
@@ -121,7 +121,7 @@ class RolePermission extends Component
         $this->dispatch('close-modal');
     }
 
-    public function confirmDelete($id)
+    public function confirmDelete($id) //konfirmasi delete
     {
 
         $role = Role::find($id);
@@ -140,6 +140,22 @@ class RolePermission extends Component
         $this->loadRoles();
         $this->dispatch('close-modal');
     }
+
+    public function show($id)
+    {
+        $this->modal_title = 'View Role';
+        $this->mode = 'view';
+        $this->role_id = $id;
+    
+        // Fetch the role details
+        $role = Role::findOrFail($id);
+        $this->role_name = $role->name;
+        $this->guard_name = $role->guard_name;
+        $this->selectedPermissions = $role->permissions->pluck('name')->toArray(); // Fetch permission names for display
+    
+        // Dispatch the event to open the modal
+        $this->dispatch('openViewModal');
+    }    
 
     public function resetInputFields()
     {
@@ -165,6 +181,8 @@ class RolePermission extends Component
     {
         $this->loadRoles(); 
     }
+
+    
 
     public function render()
     {

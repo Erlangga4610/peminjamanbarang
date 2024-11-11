@@ -112,6 +112,47 @@
         </div>
     </div>
 
+    <!-- View Role Modal -->
+    <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewModalLabel">{{ $modal_title }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Display Role Details -->
+                    <div class="mb-3">
+                        <label for="view_role_name" class="form-label">Role Name</label>
+                        <input type="text" class="form-control" id="view_role_name" wire:model="role_name" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="view_guard_name" class="form-label">Guard Name</label>
+                        <input type="text" class="form-control" id="view_guard_name" wire:model="guard_name" readonly>
+                    </div>
+
+                    <!-- Display Permissions in Grid (4 per row) -->
+                    <div class="mb-3">
+                        <label for="view_permissions" class="form-label">Permissions</label>
+                        <div class="row">
+                            @foreach ($selectedPermissions as $permission)
+                                <div class="col-md-3 mb-2"> <!-- 4 per row, each takes 3 columns (12/4 = 3) -->
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="permission-{{ $loop->index }}" disabled checked>
+                                        <label class="form-check-label" for="permission-{{ $loop->index }}">{{ $permission }}</label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -136,6 +177,7 @@
             Livewire.on('close-modal', () => {
                 $('#formModal').modal('hide');
                 $('#deleteModal').modal('hide');
+                $('#viewModal').modal('hide');  //keluar modal View 
                 Livewire.emit('resetForm');
             });
             Livewire.on('openModal', () => {
@@ -143,6 +185,11 @@
                 $('#deleteModal').modal('hide');
                 Livewire.emit('resetForm');
             });
+            Livewire.on('openViewModal', () => {
+                $('#viewModal').modal('show');  // buka Modal View 
+                Livewire.emit('resetForm');
+            });
         });
     </script>
+    
 </div>
