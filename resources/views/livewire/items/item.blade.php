@@ -14,15 +14,28 @@
 
             {{-- Success Message --}}
             @if (session()->has('message'))
-                <div class="alert alert-success">
-                    {{ session('message') }}
+                <div class="toast-container top-0 end-0 p-3">
+                    <div class="toast show fade bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true" id="liveToast" data-bs-delay="3000">
+                        <div class="toast-body">
+                            <div class="d-flex gap-4">
+                                <span><i class="fa-solid fa-circle-check fa-lg"></i></span>
+                                <div class="d-flex flex-grow-1 align-items-center">
+                                    <span class="fw-semibold">{{ session('message') }}</span>
+                                    <button type="button" class="btn-close btn-close-sm btn-close-white ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             @endif
 
-            
             <button type="button" class="btn mb-3 btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#formModal" wire:click="create">
                 Tambah Barang
             </button>
+
+            <div class="mb-1">
+                <input type="text" class="form-control" name="query" placeholder="Cari Barang" wire:model.live.debounce.100ms="search">
+            </div>
 
             {{-- Table --}}
             <div class="card border-0 rounded shadow-sm">
@@ -40,8 +53,8 @@
                             <tr>
                                 <td>{{ $item->name }}</td>
                                 <td class="text-center">
-                                    <img src="{{ asset('storage/posts/'.$item->image) }}" class="rounded" style="width: 150px">
-                                </td>
+                                    <img src="{{ asset('/storage/'.$item->image) }}" class="rounded" style="width: 150px">
+                                </td>   
                                 <td>{{ $item->jumlah }}</td>
                                 <td>
                                     <button wire:click="edit({{ $item->id }})" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#formModal">
@@ -61,50 +74,57 @@
                 </table>
             </div>
 
-        <div>{{ $items->links() }}
-        </div>
+            <div>{{ $items->links() }}</div>
         </div>
     </div>
 
-    <!-- Form Modal Create dan Edit-->
-    <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="formModalLabel">{{ $modal_title }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Form Modal Create and Edit-->
+    <div>
+        <!-- Form Modal Create and Edit-->
+        <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="formModalLabel">{{ $modal_title }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form wire:submit.prevent="{{ $mode == 'create' ? 'store' : 'update' }}">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nama Barang</label>
+                                <input type="text" class="form-control" id="name" wire:model="name" required>
+                                @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Image</label>
+                                <input type="file" class="form-control" id="image" wire:model="image" {{ $mode == 'create' ? 'required' : '' }}>
+                                @error('image') <span class="text-danger">{{ $message }}</span> @enderror
+                                @if($image)
+                                    <div class="mb-3">
+                                        <div class="mt-2">
+                                            <img src="{{ $image->temporaryUrl() }}" class="img-fluid" style="max-width: 300px; height: auto;" alt="Preview Gambar">
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>                            
+                            <div class="mb-3">
+                                <label for="jumlah" class="form-label">Jumlah</label>
+                                <input type="number" class="form-control" id="jumlah" wire:model="jumlah" required>
+                                @error('jumlah') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="reset" class="btn btn-warning">Reset</button>
+                            <button type="submit" class="btn btn-primary">
+                                {{ $mode == 'create' ? 'Save' : 'Update' }}
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <form wire:submit.prevent="{{ $mode == 'create' ? 'store' : 'update' }}">
-                <form>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Nama Barang</label>
-                            <input type="text" class="form-control" id="name" wire:model="name" required>
-                            @error('name') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Image</label>
-                            <input type="file" class="form-control" id="image" wire:model="image" required>
-                            @error('image') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="jumlah" class="form-label">Jumlah</label>
-                            <input type="number" class="form-control" id="jumlah" wire:model="jumlah" required>
-                            @error('jumlah') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="reset" class="btn btn-warning">Reset</button>
-                        <button type="submit" class="btn btn-primary">
-                            {{ $mode == 'create' ? 'Save' : 'Update' }}
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
-
+    
     <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -114,7 +134,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Apakah Anda yakin ingin menghapus Barang "{{ $item->name }}"?</p>
+                    <p>Apakah Anda yakin ingin menghapus Barang ?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -131,12 +151,23 @@
                 $('#deleteModal').modal('hide');
                 Livewire.emit('resetForm');
             });
+             // Mencegah modal tertutup saat file upload
+             const fileInput = document.querySelector('input[type="file"]');
+            if (fileInput) {
+                fileInput.addEventListener('change', (e) => {
+                    e.stopPropagation();
+                });
+            }
         });
-        Livewire.on('openModal', () => {
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('openModal', () => {
                 $('#formModal').modal('show');
                 $('#deleteModal').modal('hide');
                 Livewire.emit('resetForm');
             });
+            
+        });
     </script>
 </div>
 
+</div>

@@ -101,7 +101,6 @@ class Index extends Component
 
 
     public function destroy(){
-        // dd($this->permissionId);
         Permission::destroy($this->permissionId);
 
         session()->flash('message', 'Permission delete successfully.');

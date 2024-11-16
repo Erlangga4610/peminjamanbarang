@@ -14,6 +14,7 @@ class UserRole extends Component
     public $isEdit = false;
     public $selectedUserId = null;
     public $search = '';
+    
     protected $listeners = ['resetForm' => 'resetFields'];// Mendengarkan event 'resetForm' dan menjalankan metode 'resetInputFields' saat event dipicu.
 
 
@@ -23,6 +24,7 @@ class UserRole extends Component
     protected $rules = [
         'user_id' => 'required',
         'role_id' => 'required',
+        
     ];
 
     // Method untuk mengambil data role
@@ -35,9 +37,9 @@ class UserRole extends Component
     public function create()
     {
         // Mereset form input untuk entri baru
-        $this->resetFields();
         $this->isEdit = false; // Menandakan mode form create
         $this->dispatch('close-modal');
+        $this->resetFields();
     }
 
 
@@ -52,8 +54,8 @@ class UserRole extends Component
         if ($user && $role) {
             $user->assignRole($role);  // Menetapkan role ke user
             session()->flash('message', 'Role assigned to user successfully.');
-            $this->resetFields();
             $this->dispatch('close-modal');
+            $this->resetFields();
         }
     }
 
@@ -68,7 +70,7 @@ class UserRole extends Component
         $this->user_email = $user->email;
         $this->role_id = $user->roles->first()->id ?? null;  // Ambil role pertama jika ada
         $this->dispatch('close-modal');
-        
+
     }
 
     // Method untuk mengupdate role pada user
