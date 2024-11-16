@@ -108,7 +108,6 @@ class Index extends Component
         $this->dispatch('close-modal');
     }
 
-
     public function resetInputFields()
     {
         $this->name = '';

@@ -3,26 +3,43 @@ namespace App\Livewire\Permission;
 
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
 
 class UserRole extends Component
 {
-    public $users, $user_id, $role_id;
+    public $user_id, $role_id;
     public $user_name, $user_email;
     public $roles;
-    public $isEdit = false;  // Untuk mode edit atau create
-    public $selectedUserId = null;  // Menyimpan ID user yang akan dihapus role-nya
+    public $isEdit = false;
+    public $selectedUserId = null;
+    public $search = '';
+    protected $listeners = ['resetForm' => 'resetFields'];// Mendengarkan event 'resetForm' dan menjalankan metode 'resetInputFields' saat event dipicu.
+
+
+    use WithPagination; // Trait untuk pagination
+    protected $paginationTheme = 'bootstrap';
 
     protected $rules = [
-        'role_id' => 'required',  // Validasi untuk role yang dipilih
+        'user_id' => 'required',
+        'role_id' => 'required',
     ];
 
-    // Method untuk mengambil data user dan role
+    // Method untuk mengambil data role
     public function mount()
     {
         $this->roles = Role::all();  // Mengambil semua role
-        $this->users = User::all();  // Mengambil semua user
+        $this->resetFields();
     }
+
+    public function create()
+    {
+        // Mereset form input untuk entri baru
+        $this->resetFields();
+        $this->isEdit = false; // Menandakan mode form create
+        $this->dispatch('close-modal');
+    }
+
 
     // Method untuk menyimpan role pada user
     public function store()
@@ -36,7 +53,7 @@ class UserRole extends Component
             $user->assignRole($role);  // Menetapkan role ke user
             session()->flash('message', 'Role assigned to user successfully.');
             $this->resetFields();
-            $this->users = User::all();  // Refresh data user
+            $this->dispatch('close-modal');
         }
     }
 
@@ -50,6 +67,8 @@ class UserRole extends Component
         $this->user_name = $user->name;
         $this->user_email = $user->email;
         $this->role_id = $user->roles->first()->id ?? null;  // Ambil role pertama jika ada
+        $this->dispatch('close-modal');
+        
     }
 
     // Method untuk mengupdate role pada user
@@ -64,7 +83,7 @@ class UserRole extends Component
             $user->syncRoles([$role]);  // Update role dengan role yang baru
             session()->flash('message', 'User role updated successfully.');
             $this->resetFields();
-            $this->users = User::all();  // Refresh data user
+            $this->dispatch('close-modal');
         }
     }
 
@@ -82,8 +101,7 @@ class UserRole extends Component
         if ($user) {
             $user->removeRole($user->roles->first());  // Menghapus role yang sudah diberikan
             session()->flash('message', 'Role removed from user successfully.');
-            $this->users = User::all();  // Refresh data user
-            $this->dispatch('close-modal');  // Emit event untuk menutup modal
+            $this->dispatch('close-modal');
         }
     }
 
@@ -97,8 +115,20 @@ class UserRole extends Component
         $this->isEdit = false;
     }
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+
+    // Render the view
     public function render()
     {
-        return view('livewire.permission.user-role');
+        // Memanggil data users dengan pagination
+        $users = User::where('name', 'like', '%' . $this->search . '%')
+                            ->orWhere('email', 'like', '%' . $this->search . '%')
+                            ->paginate(10);
+
+        return view('livewire.permission.user-role', compact('users'));
     }
 }

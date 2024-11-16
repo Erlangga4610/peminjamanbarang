@@ -1,10 +1,12 @@
 <div>
+
     <div class="pagetitle">
         <h1>Permissions</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a wire:click href="{{ '/dashboard' }}">Home</a></li>
                 <li class="breadcrumb-item"><a wire:click href="{{ url('/permission')}}">Permissions</a></li>
+                <li class="breadcrumb-item"><a wire:click href="{{ url('/user-role')}}">User Role</a></li>
             </ol>
         </nav>
     </div>
@@ -36,6 +38,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
+                <th>No</th>
                 <th wire:click="sort('name')" style="cursor: pointer;">
                     Roles
                     @if ($sortBy === 'name')
@@ -49,6 +52,7 @@
         <tbody>
             @foreach ($roles as $role)
                 <tr>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $role->name }}</td>
                     <td>{{ $role->guard_name }}</td>
                     <td>
@@ -64,7 +68,6 @@
             @endforeach
         </tbody>
     </table>
-
 
     <!-- Form Modal for Create and Edit -->
     <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
@@ -126,17 +129,17 @@
                         <label for="view_role_name" class="form-label">Role Name</label>
                         <input type="text" class="form-control" id="view_role_name" wire:model="role_name" readonly>
                     </div>
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="view_guard_name" class="form-label">Guard Name</label>
                         <input type="text" class="form-control" id="view_guard_name" wire:model="guard_name" readonly>
-                    </div>
+                    </div> --}}
 
                     <!-- Display Permissions in Grid (4 per row) -->
                     <div class="mb-3">
                         <label for="view_permissions" class="form-label">Permissions</label>
                         <div class="row">
                             @foreach ($selectedPermissions as $permission)
-                                <div class="col-md-3 mb-2"> <!-- 4 per row, each takes 3 columns (12/4 = 3) -->
+                                <div class="col-md-3 mb-2">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="permission-{{ $loop->index }}" disabled checked>
                                         <label class="form-check-label" for="permission-{{ $loop->index }}">{{ $permission }}</label>
@@ -155,7 +158,7 @@
 
     <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
@@ -191,5 +194,4 @@
             });
         });
     </script>
-    
 </div>

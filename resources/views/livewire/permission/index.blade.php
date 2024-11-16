@@ -38,7 +38,7 @@
     <table class="table table-bordered">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">No</th>
                 <th scope="col" wire:click="sort('name')" style="cursor: pointer;">
                     Name
                     @if ($sortBy === 'name')
@@ -55,9 +55,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($permissions as $index => $permission)
+            @foreach ($permissions as  $permission)
                 <tr>
-                    <td>{{$permissions->firstItem() + $index }}</td>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $permission->name }}</td>
                     <td>{{ $permission->guard_name }}</td>
                     <td>
@@ -110,7 +110,7 @@
 
     <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>

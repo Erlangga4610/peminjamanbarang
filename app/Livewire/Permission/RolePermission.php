@@ -151,8 +151,7 @@ class RolePermission extends Component
         $role = Role::findOrFail($id);
         $this->role_name = $role->name;
         $this->guard_name = $role->guard_name;
-        $this->selectedPermissions = $role->permissions->pluck('name')->toArray(); // Fetch permission names for display
-    
+        $this->selectedPermissions = $role->permissions->pluck('name')->toArray(); 
         // Dispatch the event to open the modal
         $this->dispatch('openViewModal');
     }    
@@ -186,15 +185,12 @@ class RolePermission extends Component
 
     public function render()
     {
-        // // Membatasi jumlah roles per halaman dengan pagination
-        // $roles = Role::query()
-        //     ->where('name', 'like', '%' . $this->search . '%')
-        //     ->orderBy($this->sortBy, $this->sortDirection)
-        //     ->paginate(5);
+
+        $roles = $this->roles;
 
         return view('livewire.permission.role-permission', [
             'roles' => $this->roles,
-            'permissions' => $this->permissions,  
+            'permissions' => $this->permissions,
         ]);
     }
 }

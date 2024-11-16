@@ -34,7 +34,7 @@
       @can('role-view')
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-people"></i><span>Role </span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-people"></i><span>Roles</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
          
@@ -45,7 +45,7 @@
           </li>
           <li>
             <a href="{{url('/role-permission')}}">
-              <i class="bi bi-person-check"></i><span>Akses Role</span>
+              <i class="bi bi-person-lock"></i><span> Role</span>
             </a>
           </li>
           <li>
@@ -58,9 +58,9 @@
       @endcan
       
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{('/dashboard')}}">
+        <a class="nav-link collapsed" href="{{('/item')}}">
           <i class="bi bi-handbag"></i>
-          <span>Peminjaman Barang</span>
+          <span>Data Barang</span>
         </a>
       </li><!-- End Dashboard Nav -->
 

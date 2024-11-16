@@ -14,6 +14,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/permission', App\Livewire\Permission\Index::class);
     Route::get('/role-permission', App\Livewire\Permission\RolePermission::class);
     Route::get('/user-role', App\Livewire\Permission\UserRole::class);
+    Route::get('/item', App\Livewire\Items\Item::class);
 
 
     Route::post('/logout', function () {

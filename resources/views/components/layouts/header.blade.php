@@ -5,9 +5,10 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="/assets/img/logom.jpg" alt="">
-        <span class="d-none d-lg-block">NiceAdmin</span>
+        {{-- <span class="d-none d-lg-block">PinjamIn</span> --}}
+        <i class="bi bi-cart" style="color: rgb(37, 108, 239); font-weight: bold;">PinjamIn</i>
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+      <span><i class="bi bi-list toggle-sidebar-btn"></i></span>
     </div><!-- End Logo -->
 
     <div class="search-bar">
@@ -26,7 +27,7 @@
           </a>
         </li><!-- End Search Icon-->
 
-        <li class="nav-item dropdown">
+        {{-- <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
@@ -165,7 +166,7 @@
 
           </ul><!-- End Messages Dropdown Items -->
 
-        </li><!-- End Messages Nav -->
+        </li><!-- End Messages Nav --> --}}
 
         <li class="nav-item dropdown pe-3">
 
