@@ -1,4 +1,6 @@
 <div>
+    @if(auth()->user()->can('view-permission'))
+    
     <!-- Pesan berhasil -->
     @if (session()->has('message'))
     <div class="toast-container top-0 end-0 p-3">
@@ -138,6 +140,11 @@
     </div>
 
 </div>
+    @else
+    <div class="mb-3">
+        <h3 align="center">Kamu  Tidak Mempunyai Akses untuk Halaman ini</h3>
+    </div>
+    @endif
 
 <script>
     document.addEventListener('livewire:init', () => {

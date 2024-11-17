@@ -1,4 +1,5 @@
 <div>
+    @if(auth()->user()->can('view-permission'))
     <div class="pagetitle">
         <h1>Permissions</h1>
         <nav>
@@ -126,6 +127,12 @@
             </div>
         </div>
     </div>
+    
+    @else
+    <div class="mb-3">
+        <h3 align="center">Kamu  Tidak Mempunyai Akses untuk Halaman ini</h3>
+    </div>
+    @endif
 
     <script>
         document.addEventListener('livewire:init', () => {

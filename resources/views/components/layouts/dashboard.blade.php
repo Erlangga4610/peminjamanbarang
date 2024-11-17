@@ -1,5 +1,5 @@
 <div>
-  
+@if(auth()->user()->can('view-dashboard'))
 <div class="pagetitle">
   <h1>Dashboard</h1>
   <nav>
@@ -11,7 +11,7 @@
   </nav>
 </div><!-- End Page Title -->
 
-@can('view-dashboard')
+
 <section class="section">
   {{-- <div class="row">
     <div class="col-lg-6">
@@ -43,5 +43,10 @@
     </div>
   </div>
 </section>
-@endcan
+
+@else
+<div class="mb-3" align="center">
+  <h2>kamu tidak Punya akses Untuk Halam ini</h2>
+</div>
+@endif
 </div>

@@ -31,7 +31,7 @@
         </ul>
       </li><!-- End Forms Nav -->
       
-      @can('role-view')
+      
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-people"></i><span>Roles</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -55,7 +55,7 @@
           </li>
         </ul>
       </li><!-- End Components Nav -->   
-      @endcan
+      
       
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{('/item')}}">

@@ -1,5 +1,6 @@
 <div>
-
+    @if(auth()->user()->can('view-permission'))
+    
     <div class="pagetitle">
         <h1>Permissions</h1>
         <nav>
@@ -129,10 +130,6 @@
                         <label for="view_role_name" class="form-label">Role Name</label>
                         <input type="text" class="form-control" id="view_role_name" wire:model="role_name" readonly>
                     </div>
-                    {{-- <div class="mb-3">
-                        <label for="view_guard_name" class="form-label">Guard Name</label>
-                        <input type="text" class="form-control" id="view_guard_name" wire:model="guard_name" readonly>
-                    </div> --}}
 
                     <!-- Display Permissions in Grid (4 per row) -->
                     <div class="mb-3">
@@ -174,6 +171,12 @@
             </div>
         </div>
     </div>
+
+    @else
+    <div class="mb-3">
+        <h3 align="center">Kamu  Tidak Mempunyai Akses untuk Halaman ini</h3>
+    </div>
+    @endif
 
     <script>
         document.addEventListener('livewire:init', () => {

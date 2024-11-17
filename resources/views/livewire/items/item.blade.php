@@ -4,7 +4,9 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a wire:click href="{{ '/dashboard' }}">Home</a></li>
-                <li class="breadcrumb-item"><a wire:click href="{{ url('/items')}}">Data Barang</a></li>
+                <li class="breadcrumb-item"><a wire:click href="{{ url('/item')}}">Data Barang</a></li>
+                <li class="breadcrumb-item"><a wire:click href="{{ url('/category')}}">Data Kategori</a></li>
+
             </ol>
         </nav>
     </div>
@@ -31,7 +33,10 @@
 
             <button type="button" class="btn mb-3 btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#formModal" wire:click="create">
                 Tambah Barang
-            </button>
+            </button>      
+            <button type="button" class="btn mb-3 btn-sm btn-primary" onclick="window.location='/category'">
+                Tambah Kategori
+            </button>            
 
             <div class="mb-1">
                 <input type="text" class="form-control" name="query" placeholder="Cari Barang" wire:model.live.debounce.100ms="search">
@@ -43,6 +48,7 @@
                     <thead class="bg-dark text-white">
                         <tr>
                             <th scope="col">Name</th>
+                            <th scope="col">kategori</th>
                             <th scope="col">Image</th>
                             <th scope="col">Jumlah</th>
                             <th scope="col">Aksi</th>
@@ -52,8 +58,10 @@
                         @forelse ($items as $item)
                             <tr>
                                 <td>{{ $item->name }}</td>
-                                <td class="text-center">
-                                    <img src="{{ asset('/storage/'.$item->image) }}" class="rounded" style="width: 150px">
+                                <td>{{ $item->category ? $item->category->name : 'Tanpa Kategori' }}
+                                </td>
+                                <td class="">
+                                    <img src="{{ asset('/storage/'.$item->image) }}" class="rounded" style="max-width: 50px; height: auto;">
                                 </td>   
                                 <td>{{ $item->jumlah }}</td>
                                 <td>
@@ -95,18 +103,34 @@
                                 <input type="text" class="form-control" id="name" wire:model="name" required>
                                 @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
+                            <!-- Inside your modal form -->
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Kategori</label>
+                                <select wire:model="selectedCategory" id="category" class="form-control" required>
+                                    <option value="">Pilih Kategori</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('selectedCategory') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
                             <div class="mb-3">
                                 <label for="image" class="form-label">Image</label>
-                                <input type="file" class="form-control" id="image" wire:model="image" {{ $mode == 'create' ? 'required' : '' }}>
+                                <input type="file" class="form-control" id="image" wire:model="image">
                                 @error('image') <span class="text-danger">{{ $message }}</span> @enderror
-                                @if($image)
-                                    <div class="mb-3">
-                                        <div class="mt-2">
-                                            <img src="{{ $image->temporaryUrl() }}" class="img-fluid" style="max-width: 300px; height: auto;" alt="Preview Gambar">
-                                        </div>
+                                @if ($mode == 'edit' && $lastImage)
+                                    <div class="mt-2">
+                                        <p><strong>Gambar Lama:</strong></p>
+                                        <img src="{{ asset('storage/'.$lastImage) }}" class="img-fluid" style="max-width: 100px; height: auto;" alt="Gambar Lama">
                                     </div>
                                 @endif
-                            </div>                            
+                                @if ($image)
+                                    <div class="mt-2">
+                                        <p><strong>Gambar Baru:</strong></p>
+                                        <img src="{{ $image->temporaryUrl() }}" class="img-fluid" style="max-width: 100px; height: auto;" alt="Preview Gambar">
+                                    </div>
+                                @endif
+                            </div>                                                      
                             <div class="mb-3">
                                 <label for="jumlah" class="form-label">Jumlah</label>
                                 <input type="number" class="form-control" id="jumlah" wire:model="jumlah" required>
