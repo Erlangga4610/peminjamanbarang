@@ -50,7 +50,7 @@
           </li>
           <li>
             <a href="{{url('/user-role')}}">
-              <i class="bi bi-person-check"></i><span>User Role</span>
+              <i class="bi bi-person-check"></i><span>Assign Role</span>
             </a>
           </li>
         </ul>

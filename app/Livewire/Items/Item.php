@@ -22,6 +22,8 @@ class Item extends Component
     public $selectedCategory = ''; // Untuk menyimpan ID kategori yang dipilih
     public $categories; // Untuk menyimpan kategori untuk dropdown
     protected $paginationTheme = 'bootstrap';
+    public $sortBy = 'name'; //kolom default untuk sorting
+    public $sortDirection = 'asc';
 
     // Reset input fields setelah create or update
     public function resetInputFields()
@@ -37,6 +39,13 @@ class Item extends Component
         // Fetch categories on mount
         $this->categories = Categori::all();
     }
+
+    protected $rules = [
+        'name' => 'required|string|max:255',
+        'jumlah' => 'required|integer|min:1',
+        'image' => 'required|image|max:1024', // image validation
+        'selectedCategory' => 'required|exists:categories,id', // Validate category
+    ];
 
     public function create()
     {
@@ -146,12 +155,23 @@ class Item extends Component
         $this->resetPage();
     }
 
+    public function sort($column)
+    {
+        if ($this->sortBy === $column){
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortBy = $column;
+            $this->sortDirection = 'asc';
+        }
+    }
+
     public function render()
     {
         $items = ItemModel::query()
             ->where('name', 'like', "%{$this->search}%")  
             ->orWhere('jumlah', 'like', "%{$this->search}%")  
-            ->with('category') // 
+            ->with('category') //
+            ->orderBy($this->sortBy, $this->sortDirection) 
             ->paginate(5);  
 
         return view('livewire.items.item', compact('items'));

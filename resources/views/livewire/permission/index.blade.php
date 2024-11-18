@@ -39,7 +39,7 @@
     <table class="table table-bordered">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">No</th>
+                {{-- <th scope="col">No</th> --}}
                 <th scope="col" wire:click="sort('name')" style="cursor: pointer;">
                     Name
                     @if ($sortBy === 'name')
@@ -58,7 +58,7 @@
         <tbody>
             @foreach ($permissions as  $permission)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    {{-- <td>{{ $loop->iteration }}</td> --}}
                     <td>{{ $permission->name }}</td>
                     <td>{{ $permission->guard_name }}</td>
                     <td>

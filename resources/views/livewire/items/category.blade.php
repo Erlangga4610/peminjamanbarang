@@ -44,7 +44,13 @@
                 <table class="table table-bordered">
                     <thead class="bg-dark text-white">
                         <tr>
-                            <th scope="col">Name kategori</th>
+                            {{-- <th scope="col">Name kategori</th> --}}
+                            <th scope="col" wire:click="sort('name')" style="cursor: pointer;">
+                                Name Kategori
+                                @if ($sortBy === 'name')
+                                    <span>{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                                @endif
+                            </th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>

@@ -16,6 +16,8 @@ class Category extends Component
     public $kat_id;
     public $search = '';
     protected $paginationTheme = 'bootstrap';
+    public $sortBy = 'name'; //kolom default untuk sorting
+    public $sortDirection = 'asc';
 
     public function create()
     {
@@ -95,14 +97,25 @@ class Category extends Component
         $this->name = '';
     }
 
-    public function render()
-{
-    $categories = Categori::when($this->search, function ($query) {
-        return $query->where('name', 'like', '%' . $this->search . '%');
-    })
-    ->paginate(5); 
+    public function sort($column)
+    {
+        if ($this->sortBy === $column){
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortBy = $column;
+            $this->sortDirection = 'asc';
+        }
+    }
 
-    return view('livewire.items.category', compact('categories'));
-}
+    public function render()
+    {
+        $categories = Categori::when($this->search, function ($query) {
+            return $query->where('name', 'like', '%' . $this->search . '%');
+        })
+        ->orderBy($this->sortBy, $this->sortDirection) 
+        ->paginate(5); 
+
+        return view('livewire.items.category', compact('categories'));
+    }
 
 }

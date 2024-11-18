@@ -2,7 +2,7 @@
     @if(auth()->user()->can('view-permission'))
     
     <div class="pagetitle">
-        <h1>Permissions</h1>
+        <h1>Role</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a wire:click href="{{ '/dashboard' }}">Home</a></li>
@@ -39,7 +39,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>No</th>
+                {{-- <th>No</th> --}}
                 <th wire:click="sort('name')" style="cursor: pointer;">
                     Roles
                     @if ($sortBy === 'name')
@@ -53,7 +53,7 @@
         <tbody>
             @foreach ($roles as $role)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    {{-- <td>{{ $loop->iteration }}</td> --}}
                     <td>{{ $role->name }}</td>
                     <td>{{ $role->guard_name }}</td>
                     <td>

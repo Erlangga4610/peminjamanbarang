@@ -47,7 +47,12 @@
                 <table class="table table-bordered">
                     <thead class="bg-dark text-white">
                         <tr>
-                            <th scope="col">Name</th>
+                            <th scope="col" wire:click="sort('name')" style="cursor: pointer;">
+                                Name
+                                @if ($sortBy === 'name')
+                                    <span>{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                                @endif
+                            </th>
                             <th scope="col">kategori</th>
                             <th scope="col">Image</th>
                             <th scope="col">Jumlah</th>
@@ -100,7 +105,7 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nama Barang</label>
-                                <input type="text" class="form-control" id="name" wire:model="name" required>
+                                <input type="text" class="form-control"  wire:model="name" class="form-control @error('name') is-invalid @enderror" id="name" required>
                                 @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <!-- Inside your modal form -->
@@ -148,6 +153,7 @@
                 </div>
             </div>
         </div>
+    
     
     <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">

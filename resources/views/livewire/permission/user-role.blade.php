@@ -88,7 +88,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>No</th>
+                {{-- <th>No</th> --}}
                 <th>User Name</th>
                 <th>User Email</th>
                 <th>Role</th>
@@ -98,7 +98,7 @@
         <tbody>
             @foreach ($users as $user)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    {{-- <td>{{ $loop->iteration }}</td> --}}
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
