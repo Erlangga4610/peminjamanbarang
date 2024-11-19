@@ -20,6 +20,9 @@ class Employee extends Component
     public $mode = '';
     public $modal_title = '';
     public $employeId;
+    public $search = '';
+    protected $paginationTheme = 'bootstrap';
+
 
     public function resetInputFields()
     {
@@ -43,13 +46,13 @@ class Employee extends Component
     public function store()
     {
         $this->validate([
-            'nik' => 'required|unique:employees,nik',
-            'name' => 'required|string|max:255',
-            'gender' => 'required|boolean',
-            'birth_place' => 'required|string|max:255',
-            'address' => 'required|string',
+            'nik' => 'required|unique:employees,nik|max:50|min:3',
+            'name' => 'required|string|max:255|min:3',
+            'gender' => 'required|in:1,2',
+            'birth_place' => 'required|string|max:255|',
+            'address' => 'required|string|min:3',
             'status' => 'required|boolean',
-            'contact' => 'required|string',
+            'contact' => 'required|string|min:4',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -101,13 +104,13 @@ class Employee extends Component
     {
         // Validasi input
         $this->validate([
-            'nik' => 'required|unique:employees,nik,' . $this->employeId, // Unique except the current employee
-            'name' => 'required|string|max:255',
-            'gender' => 'required|boolean',
+            'nik' => 'required|unique:employees,nik,' . $this->employeId . '|max:50|min:3', // Unique except the current employee
+            'name' => 'required|string|max:255|min:3',
+            'gender' => 'required|in:1,2',
             'birth_place' => 'required|string|max:255',
             'address' => 'required|string',
             'status' => 'required|boolean',
-            'contact' => 'required|string',
+            'contact' => 'required|string|min:3',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -155,11 +158,40 @@ class Employee extends Component
             session()->flash('message', 'Terjadi Kesalahan: ' . $th->getMessage());
         }
     }
-   
+
+    public function confirmDelete($employeId)
+    {
+        $this->$employeId = $employeId;
+        $this->dispatch('openDeleteModal');
+    }
+
+    public function destroy()
+    {
+        $employee = Employe::findOrFail($this->employeId);
+        Storage::disk('public')->delete($employee->image);
+        $employee->delete();
+
+        session()->flash('message', 'Data Berhasil Dihapus');
+        $this->dispatch('close-modal');
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+
     public function render()
     {
-        return view('livewire.employees.employee',[
-            'employee' => Employe::all()
+        // Ambil data employee berdasarkan pencarian
+        $employee = Employe::where('nik', 'like', '%'.$this->search.'%')
+                        ->orWhere('name', 'like', '%'.$this->search.'%')
+                        ->orWhere('address', 'like', '%'.$this->search.'%')
+                        ->orWhere('contact', 'like', '%'.$this->search.'%')
+                        ->paginate(5);  
+        return view('livewire.employees.employee', [
+            'employee' => $employee
         ]);
     }
+
 }

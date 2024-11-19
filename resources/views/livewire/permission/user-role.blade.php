@@ -139,25 +139,41 @@
         </div>
     </div>
 
+    {{-- css untuk table --}}
+    <style>
+        .table th, .table td {
+            padding: 5px 10px; /* Mengurangi padding untuk membuat tabel lebih kecil */
+            font-size: 12px; /* Mengurangi ukuran font */
+        }
+
+        .table img {
+            max-width: 50px; /* Membuat gambar lebih kecil */
+            height: auto;
+        }
+    </style>
+
 </div>
+
     @else
     <div class="mb-3">
         <h3 align="center">Kamu  Tidak Mempunyai Akses untuk Halaman ini</h3>
     </div>
     @endif
 
-<script>
-    document.addEventListener('livewire:init', () => {
-        Livewire.on('close-modal', () => {
-            $('#roleModal').modal('hide');
-            $('#removeRoleModal').modal('hide');
-            Livewire.emit('resetForm');
-        });
-
-        Livewire.on('openModal', () => {
-                $('#roleModal').modal('show');
+    <script>
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('close-modal', () => {
+                $('#roleModal').modal('hide');
                 $('#removeRoleModal').modal('hide');
                 Livewire.emit('resetForm');
             });
-    });
-</script>
+
+            Livewire.on('openModal', () => {
+                    $('#roleModal').modal('show');
+                    $('#removeRoleModal').modal('hide');
+                    Livewire.emit('resetForm');
+                });
+        });
+    </script>
+
+

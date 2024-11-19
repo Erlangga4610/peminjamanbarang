@@ -1,28 +1,32 @@
 <?php
-
-namespace App\Livewire\Items;
+namespace App\Livewire\Employees;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Categori;
+use App\Models\Division as Divisi;
 
-class Category extends Component
+class Division extends Component
 {
-
     use WithPagination;
+
     public $name;
-    public $modal_title = '';
     public $mode = '';
-    public $kat_id;
+    public $modal_title = '';
+    public $div_id;
     public $search = '';
     protected $paginationTheme = 'bootstrap';
     public $sortBy = 'name'; //kolom default untuk sorting
     public $sortDirection = 'asc';
 
+    public function resetInputFields()
+    {
+        $this->name = '';
+    }
+
     public function create()
     {
         $this->mode  = 'create';
-        $this->modal_title = 'Tambah kategori';
+        $this->modal_title = 'Tambah Divisi';
         $this->resetInputFields();
     }
 
@@ -33,7 +37,7 @@ class Category extends Component
         ]);
 
         //create
-        Categori::create([
+        Divisi::create([
             'name' => $this->name,
         ]);
 
@@ -41,16 +45,16 @@ class Category extends Component
         $this->dispatch('close-modal');
     }
 
-    public function edit($kat_id)
+    public function edit($div_id)
     {
         $this->mode = 'edit';
         $this->modal_title = 'Edit kategori';
 
         //menemukan by id
-        $category = Categori::findOrFail($kat_id);
+        $divisi = Divisi::findOrFail($div_id);
 
-        $this->kat_id = $category->id;
-        $this->name = $category->name;
+        $this->div_id = $divisi->id;
+        $this->name = $divisi->name;
         // $this->dispatch('close-modal')
     }
 
@@ -61,27 +65,27 @@ class Category extends Component
         ]);
 
         //menemukan kategori
-        $category = Categori::findOrFail($this->kat_id);
+        $divisi = Divisi::findOrFail($this->div_id);
 
         //memperbarui dat
-        $category->name = $this->name;
-        $category->save();
+        $divisi->name = $this->name;
+        $divisi->save();
 
         session()->flash('message', 'Data Berhasil DiUpdate');
         $this->resetInputFields();  
         $this->dispatch('close-modal');
     }
 
-    public function confirmdelete($kat_id)
+    public function confirmdelete($div_id)
     {   
-        $this->kat_id = $kat_id;
+        $this->div_id = $div_id;
         $this->dispatch('close-modal');
     }
 
     public function destroy()
     {
-        $category = Categori::findOrFail($this->kat_id);
-        $category->delete();
+        $divisi = Divisi::findOrFail($this->div_id);
+        $divisi->delete();
 
         session()->flash('message', 'Data Berhasil Dihapus');
         $this->dispatch('close-modal');
@@ -90,11 +94,6 @@ class Category extends Component
     public function updatingSearch()
     {
         $this->resetPage();
-    }
-
-    public function resetInputFields()
-    {
-        $this->name = '';
     }
 
     public function sort($column)
@@ -109,13 +108,15 @@ class Category extends Component
 
     public function render()
     {
-        $categories = Categori::when($this->search, function ($query) {
+        $divisions = Divisi::when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
         })
-        ->orderBy($this->sortBy, $this->sortDirection) 
-        ->paginate(5); 
+        ->orderBy($this->sortBy, $this->sortDirection)  // Mengurutkan berdasarkan kolom dan arah yang dipilih
+        ->paginate(10);  // Menentukan jumlah data per halaman
 
-        return view('livewire.items.category', compact('categories'));
+        // Mengirimkan data ke view Livewire
+        return view('livewire.employees.division', compact('divisions'));
     }
+
 
 }

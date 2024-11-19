@@ -16,6 +16,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/item', App\Livewire\Items\Item::class);
     Route::get('/category', App\Livewire\Items\Category::class);
     Route::get('/employee', App\Livewire\Employees\Employee::class);
+    Route::get('/division', \App\Livewire\Employees\Division::class);
 
 
     Route::post('/logout', function () {

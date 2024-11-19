@@ -65,7 +65,7 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ url('/data-karyawan') }}">
+        <a class="nav-link collapsed" href="{{ url('/employee') }}">
             <i class="bi bi-file-earmark-person"></i>
             <span>Data Karyawan</span>
         </a>

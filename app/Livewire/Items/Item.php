@@ -58,7 +58,7 @@ class Item extends Component
     public function store()
     {
         $this->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|min:3',
             'jumlah' => 'required|integer|min:1',
             'image' => 'required|image|max:1024', // image validation
             'selectedCategory' => 'required|exists:categories,id', // Validate category
@@ -102,9 +102,9 @@ class Item extends Component
     public function update()
     {
         $this->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|min:3',
             'jumlah' => 'required|integer|min:1',
-            'image' => 'nullable|image|max:1024', 
+            'image' => 'nullable|image|max:1024|min:', 
             'selectedCategory' => 'required|exists:categories,id', // Validate category
         ]);
 

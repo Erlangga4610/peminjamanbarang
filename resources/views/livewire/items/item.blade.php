@@ -31,12 +31,17 @@
                 </div>
             @endif
 
+            @can('item-create')
             <button type="button" class="btn mb-3 btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#formModal" wire:click="create">
                 Tambah Barang
-            </button>      
+            </button>    
+            @endcan  
+
+            @can('item-create')
             <button type="button" class="btn mb-3 btn-sm btn-primary" onclick="window.location='/category'">
                 Tambah Kategori
-            </button>            
+            </button>        
+            @endcan    
 
             <div class="mb-1">
                 <input type="text" class="form-control" name="query" placeholder="Cari Barang" wire:model.live.debounce.100ms="search">
@@ -70,12 +75,16 @@
                                 </td>   
                                 <td>{{ $item->jumlah }}</td>
                                 <td>
+                                    @can('item-edit')
                                     <button wire:click="edit({{ $item->id }})" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#formModal">
                                         Edit
                                     </button>
+                                    @endcan
+                                    @can('item-delete')
                                     <button wire:click="confirmDelete({{ $item->id }})" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                         Delete
                                     </button>
+                                    @endcan
                                 </td>
                             </tr>
                         @empty
@@ -198,6 +207,19 @@
             
         });
     </script>
+
+    {{-- css untuk table --}}
+    <style>
+        .table th, .table td {
+            padding: 5px 10px; /* Mengurangi padding untuk membuat tabel lebih kecil */
+            font-size: 12px; /* Mengurangi ukuran font */
+        }
+
+        .table img {
+            max-width: 50px; /* Membuat gambar lebih kecil */
+            height: auto;
+        }
+    </style>
 </div>
 
 </div>

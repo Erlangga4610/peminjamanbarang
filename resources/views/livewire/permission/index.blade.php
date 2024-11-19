@@ -143,4 +143,17 @@
             });
         });
     </script>
+
+    {{-- css untuk table --}}
+    <style>
+        .table th, .table td {
+            padding: 5px 10px; /* Mengurangi padding untuk membuat tabel lebih kecil */
+            font-size: 12px; /* Mengurangi ukuran font */
+        }
+
+        .table img {
+            max-width: 50px; /* Membuat gambar lebih kecil */
+            height: auto;
+        }
+    </style>
 </div>
