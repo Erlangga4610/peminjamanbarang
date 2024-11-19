@@ -24,6 +24,7 @@ class Item extends Component
     protected $paginationTheme = 'bootstrap';
     public $sortBy = 'name'; //kolom default untuk sorting
     public $sortDirection = 'asc';
+    
 
     // Reset input fields setelah create or update
     public function resetInputFields()
