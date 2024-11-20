@@ -4,8 +4,8 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a wire:click href="{{ '/dashboard' }}">Home</a></li>
-                <li class="breadcrumb-item"><a wire:click href="{{ url('/category')}}">~</a></li>
-                <li class="breadcrumb-item"><a wire:click href="{{ url('/item')}}">~</a></li>
+                <li class="breadcrumb-item"><a wire:click href="{{ url('/employee')}}">Data Karyawan</a></li>
+                <li class="breadcrumb-item"><a wire:click href="{{ url('/division')}}">Data Divisi</a></li>
             </ol>
         </nav>
     </div>

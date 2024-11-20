@@ -69,7 +69,14 @@
             <i class="bi bi-file-earmark-person"></i>
             <span>Data Karyawan</span>
         </a>
-    </li><!-- End Data Karyawan Nav -->    
+    </li><!-- End Data Karyawan Nav -->
+    
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ url('/employee') }}">
+          <i class="bi bi-bag"></i>
+          <span>Peminjaman Barang</span>
+      </a>
+    </li><!-- End Data Karyawan Nav -->
 
     </ul>
 

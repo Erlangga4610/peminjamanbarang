@@ -86,6 +86,7 @@ class Item extends Component
     {
         $this->mode = "edit";
         $this->modal_title = "Edit Barang";
+        $this->resetInputFields();
 
         // Find the item by ID
         $item = ItemModel::findOrFail($itemId);

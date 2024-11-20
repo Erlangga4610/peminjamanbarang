@@ -4,8 +4,8 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a wire:click href="{{ '/dashboard' }}">Home</a></li>
-                <li class="breadcrumb-item"><a wire:click href="{{ url('/i')}}">~</a></li>
-                <li class="breadcrumb-item"><a wire:click href="{{ url('/c')}}">~</a></li>
+                <li class="breadcrumb-item"><a wire:click href="{{ url('/employee')}}">Data Karyawan</a></li>
+                <li class="breadcrumb-item"><a wire:click href="{{ url('/division')}}">Data Divisi</a></li>
             </ol>
         </nav>
     </div>
@@ -47,12 +47,18 @@
                 <table class="table table-bordered table-sm">
                     <thead class="bg-dark text-white">
                         <tr>
-                            <th>Nik</th>
+                            <th scope="col" wire:click="sort('nik')" style="cursor: pointer;">
+                                NIK
+                                @if ($sortBy === 'nik')
+                                    <span>{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                                @endif
+                            </th>
                             <th>Name</th>
                             <th>Jenis kelamin</th>
                             <th>Tempat Tanggal Lahir</th>
                             <th>Alamat</th>
                             <th>Kontak</th>
+                            <th>Divisi</th>
                             <th>Status</th>
                             <th>Image</th>
                             <th>Aksi</th>
@@ -67,6 +73,7 @@
                                 <td>{{ $value->birth_place }}</td>
                                 <td>{{ $value->address }}</td>
                                 <td>{{ $value->contact}}</td>
+                                <td>{{ $value->division->name ?? 'N/A' }}</td>
                                 <td>{{ $value->status == 0 ? 'Active' : 'Inactive' }}</td>
                                 <td><img src="{{ asset('storage/'.$value->image) }}" class="img-fluid" style="max-width: 50px; height: auto;" alt="Image"></td>
                                 <td>
@@ -150,6 +157,18 @@
                                     <input type="text" class="form-control" wire:model="contact" id="contact" required>
                                     @error('contact') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="division_id" class="form-label">Divisi</label>
+                                    <select wire:model="division_id" class="form-control" id="division_id" required>
+                                        <option value="" disabled selected>Pilih Divisi</option>
+                                        @foreach($divisions as $division)
+                                            <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('division_id') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                
     
                                 <div class="col-md-6 mb-3">
                                     <label for="image" class="form-label">Image</label>

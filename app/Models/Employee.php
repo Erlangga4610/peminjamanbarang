@@ -12,6 +12,11 @@ class Employee extends Model
 
 
     protected $fillable = [
-        'nik','name','gender','birth_place','address','contact','status','image'
+        'nik','name','gender','birth_place','address','contact','status','image', 'division_id'
     ];
+
+    public function division()
+    {
+        return $this->belongsTo(Division::class);
+    }
 }
