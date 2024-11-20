@@ -41,7 +41,7 @@
 
             {{-- table --}}
             <div class="card border-0 rounded shadow-sm">
-                <table class="table table-bordered">
+                <table class="table table-striped table-bordered">
                     <thead class="bg-dark text-white">
                         <tr>
                             <th scope="col" wire:click="sort('name')" style="cursor: pointer;">
@@ -58,12 +58,13 @@
                             <tr>
                                 <td>{{ $value->name }}</td> 
                                 <td>
-                                    <button wire:click="edit({{$value->id}})" class="btn btn-sm btn-warning"data-bs-toggle="modal" data-bs-target="#formModal">
-                                        Edit
+                                    <button wire:click="edit({{$value->id}})"  data-bs-toggle="modal" data-bs-target="#formModal">
+                                        <i class="fa fa-edit"></i>
                                     </button>
-                                    <button wire:click="confirmdelete({{$value->id}})" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                        Delete
-                                    </button>   
+                                    <button wire:click="confirmdelete({{$value->id}})" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                     
                                 </td>  
                             </tr>
                         @empty
@@ -159,6 +160,12 @@
             max-width: 50px; /* Membuat gambar lebih kecil */
             height: auto;
         }
+
+        .btn-sm i {
+        font-size: 14px; /* Adjust icon size */
+        margin-right: 5px; /* Add some spacing between icon and text */
+        }
+        
     </style>
 
 </div>

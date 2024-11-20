@@ -191,7 +191,7 @@ class Employee extends Component
                     ->orWhere('contact', 'like', '%' . $this->search . '%');
             })
             ->orderBy($this->sortBy, $this->sortDirection)
-            ->paginate(5);
+            ->paginate(10);
             
 
         $divisions = Division::all();

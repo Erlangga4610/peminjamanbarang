@@ -107,8 +107,8 @@
                         @endforeach
                     </td>
                     <td>
-                        <button class="btn btn-warning btn-sm" wire:click="edit({{ $user->id }})" data-bs-toggle="modal" data-bs-target="#roleModal">Edit</button>
-                        <button class="btn btn-danger btn-sm" wire:click="confirmDeleteRole({{ $user->id }})" data-bs-toggle="modal" data-bs-target="#removeRoleModal">Remove Role</button>
+                        <button  wire:click="edit({{ $user->id }})" data-bs-toggle="modal" data-bs-target="#roleModal"><i class="fa fa-edit"></i></button>
+                        <button  wire:click="confirmDeleteRole({{ $user->id }})" data-bs-toggle="modal" data-bs-target="#removeRoleModal"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>
             @endforeach

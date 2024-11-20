@@ -57,14 +57,16 @@
                     <td>{{ $role->name }}</td>
                     <td>{{ $role->guard_name }}</td>
                     <td>
-                        <button wire:click="edit({{ $role->id }})" class="btn btn-warning">
-                            Edit
+                        <button wire:click="edit({{ $role->id }})" >
+                            <i class="fa fa-edit"></i>
                         </button>
-                        <button wire:click="confirmDelete({{ $role->id }})" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            Delete
+                        <button wire:click="confirmDelete({{ $role->id }})" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            <i class="fa fa-trash"></i>
                         </button>
-                        <button wire:click="show({{$role->id}})" class="btn btn-info">View</button>
-                    </td>
+                        <button wire:click="show({{$role->id}})" >
+                            <i class="fa fa-eye"></i> 
+                        </button>
+                                            </td>
                 </tr>
             @endforeach
         </tbody>
@@ -177,6 +179,17 @@
         <h3 align="center">Kamu  Tidak Mempunyai Akses untuk Halaman ini</h3>
     </div>
     @endif
+    <style>
+        .btn-sm i {
+        font-size: 14px; /* Adjust icon size */
+        margin-right: 5px; /* Add some spacing between icon and text */
+        }
+
+        .btn-info i {
+        font-size: 14px; /* Adjust icon size */
+        margin-right: 5px; /* Add spacing between icon and text */
+        }
+    </style>
 
     <script>
         document.addEventListener('livewire:init', () => {

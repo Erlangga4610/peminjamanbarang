@@ -49,7 +49,7 @@
 
             {{-- Table --}}
             <div class="card border-0 rounded shadow-sm">
-                <table class="table table-bordered">
+                <table class="table table-striped table-bordered">
                     <thead class="bg-dark text-white">
                         <tr>
                             <th scope="col" wire:click="sort('name')" style="cursor: pointer;">
@@ -76,13 +76,13 @@
                                 <td>{{ $item->jumlah }}</td>
                                 <td>
                                     @can('item-edit')
-                                    <button wire:click="edit({{ $item->id }})" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#formModal">
-                                        Edit
+                                    <button wire:click="edit({{ $item->id }})" data-bs-toggle="modal" data-bs-target="#formModal">
+                                        <i class="fa fa-edit"></i>
                                     </button>
                                     @endcan
                                     @can('item-delete')
-                                    <button wire:click="confirmDelete({{ $item->id }})" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                        Delete
+                                    <button wire:click="confirmDelete({{ $item->id }})"  data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                        <i class="fa fa-trash"></i>
                                     </button>
                                     @endcan
                                 </td>
@@ -218,6 +218,11 @@
         .table img {
             max-width: 50px; /* Membuat gambar lebih kecil */
             height: auto;
+        }
+
+        .btn-sm i {
+        font-size: 14px; /* Adjust icon size */
+        margin-right: 5px; /* Add some spacing between icon and text */
         }
     </style>
 </div>

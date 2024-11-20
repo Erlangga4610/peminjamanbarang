@@ -62,11 +62,11 @@
                     <td>{{ $permission->name }}</td>
                     <td>{{ $permission->guard_name }}</td>
                     <td>
-                        <button wire:click="edit({{ $permission->id }})" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">
-                            Edit
+                        <button wire:click="edit({{ $permission->id }})"data-bs-toggle="modal" data-bs-target="#formModal">
+                            <i class="fa fa-edit"></i>
                         </button>
-                        <button type="button" wire:click="confirmDelete({{$permission->id}})" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            Delete
+                        <button type="button" wire:click="confirmDelete({{$permission->id}})"  data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            <i class="fa fa-trash"></i>
                         </button>
                     </td>
                 </tr>
@@ -154,6 +154,11 @@
         .table img {
             max-width: 50px; /* Membuat gambar lebih kecil */
             height: auto;
+        }
+
+        .btn-sm i {
+        font-size: 14px; /* Adjust icon size */
+        margin-right: 5px; /* Add some spacing between icon and text */
         }
     </style>
 </div>

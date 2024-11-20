@@ -131,6 +131,7 @@ class Item extends Component
             session()->flash('message', 'Data Berhasil DiUpdate');
             $this->resetInputFields();
             $this->dispatch('close-modal');
+            
         } catch (\Throwable $th) {
             session()->flash('message', $th->getMessage());
         }
@@ -174,7 +175,7 @@ class Item extends Component
             ->orWhere('jumlah', 'like', "%{$this->search}%")  
             ->with('category') //
             ->orderBy($this->sortBy, $this->sortDirection) 
-            ->paginate(5);  
+            ->paginate(10);  
 
         return view('livewire.items.item', compact('items'));
     }

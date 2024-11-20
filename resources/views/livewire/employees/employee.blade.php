@@ -44,7 +44,7 @@
 
             {{-- table --}}
             <div class="card border-0 rounded shadow-sm">
-                <table class="table table-bordered table-sm">
+                <table class="table table-striped table-bordered">
                     <thead class="bg-dark text-white">
                         <tr>
                             <th scope="col" wire:click="sort('nik')" style="cursor: pointer;">
@@ -77,8 +77,8 @@
                                 <td>{{ $value->status == 0 ? 'Active' : 'Inactive' }}</td>
                                 <td><img src="{{ asset('storage/'.$value->image) }}" class="img-fluid" style="max-width: 50px; height: auto;" alt="Image"></td>
                                 <td>
-                                    <button wire:click="edit({{ $value->id }})" class="btn btn-warning btn-sm">Edit</button>
-                                    <button wire:click="confirmDelete({{ $value->id }})" class="btn btn-danger btn-sm">Delete</button>
+                                    <button wire:click="edit({{ $value->id }})" ><i class="fa fa-edit"></i></button>
+                                    <button wire:click="confirmDelete({{ $value->id }})" ><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                         @empty
@@ -146,8 +146,8 @@
                                     <label for="status" class="form-label">Status</label>
                                     <select class="form-control" wire:model="status" id="status" required>
                                         <option value="" disabled selected>Pilih Status</option>
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
+                                        <option value="0">Active</option>
+                                        <option value="1">Inactive</option>
                                     </select>
                                     @error('status') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>                            
@@ -260,6 +260,12 @@
 
     {{-- css untuk table dan modal --}}
     <style>
+
+        .btn-sm i {
+        font-size: 14px; /* Adjust icon size */
+        margin-right: 5px; /* Add some spacing between icon and text */
+        }
+
         .table th, .table td {
             padding: 5px 10px; /* Mengurangi padding untuk membuat tabel lebih kecil */
             font-size: 12px; /* Mengurangi ukuran font */

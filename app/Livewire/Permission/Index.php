@@ -139,7 +139,7 @@ class Index extends Component
         $permissions = Permission::where('name', 'like', '%' . $this->search . '%')
                                 ->orWhere('guard_name', 'like', '%' . $this->search . '%')
                                 ->orderBy($this->sortBy, $this->sortDirection)
-                                ->paginate(5);
+                                ->paginate(10);
     
         return view('livewire.permission.index', compact('permissions'));
     }

@@ -113,7 +113,7 @@ class Category extends Component
             return $query->where('name', 'like', '%' . $this->search . '%');
         })
         ->orderBy($this->sortBy, $this->sortDirection) 
-        ->paginate(5); 
+        ->paginate(10); 
 
         return view('livewire.items.category', compact('categories'));
     }
