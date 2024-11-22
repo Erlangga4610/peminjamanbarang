@@ -19,4 +19,9 @@ class Item extends Model
     {
         return $this->belongsTo(Categori::class, 'category_id');
     }
+
+    public function borrowings()
+    {
+        return $this->belongsToMany(Borrowing::class,'item_borrowing', 'item_id', 'borrowing_id');
+    }
 }

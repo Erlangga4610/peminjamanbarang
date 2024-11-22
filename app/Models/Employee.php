@@ -19,4 +19,10 @@ class Employee extends Model
     {
         return $this->belongsTo(Division::class);
     }
+
+    //relasi one-to-one
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -44,7 +44,7 @@ class Item extends Component
     protected $rules = [
         'name' => 'required|string|max:255',
         'jumlah' => 'required|integer|min:1',
-        'image' => 'required|image|max:1024', // image validation
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // image validation
         'selectedCategory' => 'required|exists:categories,id', // Validate category
     ];
 
@@ -60,7 +60,7 @@ class Item extends Component
         $this->validate([
             'name' => 'required|string|max:255|min:3',
             'jumlah' => 'required|integer|min:1',
-            'image' => 'required|image|max:1024', // image validation
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',// image validation
             'selectedCategory' => 'required|exists:categories,id', // Validate category
         ]);
 
@@ -105,7 +105,7 @@ class Item extends Component
         $this->validate([
             'name' => 'required|string|max:255|min:3',
             'jumlah' => 'required|integer|min:1',
-            'image' => 'nullable|image|max:1024|min:', 
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
             'selectedCategory' => 'required|exists:categories,id', // Validate category
         ]);
 

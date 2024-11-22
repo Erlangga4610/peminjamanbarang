@@ -72,7 +72,7 @@
     </li><!-- End Data Karyawan Nav -->
     
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ url('/employee') }}">
+      <a class="nav-link collapsed" href="{{ url('/borrowing') }}">
           <i class="bi bi-bag"></i>
           <span>Peminjaman Barang</span>
       </a>
