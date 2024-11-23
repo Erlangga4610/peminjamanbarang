@@ -11,7 +11,7 @@ class Borrowing extends Component
 {
     use WithPagination;
 
-    public $tanggal_pinjam, $tanggal_kembali, $borrowId, $employee_id, $item_id;
+    public $tanggal_pinjam, $tanggal_kembali, $borrowId, $employee_id, $item_id, $status;
     public $modal_title = '';
     public $mode = '';
 
@@ -20,7 +20,7 @@ class Borrowing extends Component
         'tanggal_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
         'employee_id' => 'required|exists:employees,id',
         'item_id' => 'required|exists:items,id', 
-
+        'status' => 'required|boolean', 
     ];
 
     public function resetInputFields()
@@ -29,6 +29,7 @@ class Borrowing extends Component
         $this->tanggal_kembali = '';
         $this->employee_id = '';
         $this->item_id = 'null';
+        $this->status = '';
     }
 
     public function create()
@@ -47,6 +48,7 @@ class Borrowing extends Component
             'tanggal_pinjam' => $this->tanggal_pinjam,
             'tanggal_kembali' => $this->tanggal_kembali,
             'employee_id' => $this->employee_id,
+            'status' => $this->status,
         ]);
 
         $borrowing->items()->sync($this->item_id);
@@ -69,6 +71,7 @@ class Borrowing extends Component
         $this->tanggal_kembali = $borrowings->tanggal_kembali;
         $this->employee_id = $borrowings->employee_id;
         $this->item_id = $borrowings->items->first()->id ?? null;
+        $this->status = $borrowings->status;
 
         $this->dispatch('openModal');
     }
@@ -85,6 +88,7 @@ class Borrowing extends Component
         'tanggal_pinjam' => $this->tanggal_pinjam,
         'tanggal_kembali' => $this->tanggal_kembali,
         'employee_id' => $this->employee_id,
+        'status' => $this->status,
     ]);
 
     // Tangani item berdasarkan situasi

@@ -1,72 +1,94 @@
-<!-- resources/views/errors/404.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 Not Found</title>
-    
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            background-color: #f8d7da; /* Latar belakang merah muda */
             font-family: 'Arial', sans-serif;
-        }
-        .container {
-            height: 100vh;
+            background: #f0f0f0; /* Light grayish background */
+            color: white;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
             text-align: center;
-        }
-        .error-content {
+            background: #ecf0f1; /* Light gray background for the container */
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
             max-width: 600px;
-            margin: 0 auto;
-            color: #721c24; /* Warna teks merah gelap */
+            transition: transform 0.3s ease-in-out;
         }
-        .error-icon {
-            font-size: 10rem;
-            color: #dc3545; /* Warna merah terang untuk ikon */
-            margin-bottom: 20px;
+
+        .container:hover {
+            transform: scale(1.05); /* Slight zoom effect on hover */
         }
-        .error-message {
-            font-size: 1.25rem;
-            color: #6c757d;
+
+        .dinosaur-image {
+            width: 250px; /* Larger dinosaur image */
+            height: auto;
+            animation: shake 1s ease-in-out infinite; /* Add shake animation */
         }
-        .btn-primary {
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
+        }
+
+        h1 {
+            font-size: 3em;
+            margin: 20px 0;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #2c3e50; /* Darker color for the header */
+        }
+
+        p {
+            font-size: 1.5em;
+            margin: 15px 0;
+            color: #7f8c8d; /* Slightly darker gray for the paragraph */
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-top: 20px;
             padding: 15px 30px;
-            font-size: 1.1rem;
+            background: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1.2em;
             text-transform: uppercase;
             letter-spacing: 1px;
-            background-color: #dc3545; 
-            border-color: #dc3545;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s, box-shadow 0.3s;
         }
-        .btn-primary:hover {
-            background-color: #c82333; 
-            border-color: #bd2130;
-            transition: background-color 0.3s ease;
-        }
-        .btn-primary:focus {
-            box-shadow: none;
+
+        .home-link:hover {
+            background: #c0392b;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
-@livewireStyles
 <body>
     <div class="container">
-        <div class="error-content">
-            <!-- Ikon 404 -->
-            <div class="error-icon">
-                <i class="bi bi-emoji-dizzy"></i> <!-- Anda bisa mengganti ini dengan ikon lain -->
-            </div>
-            <!-- Teks Error -->
-            <h1 class="display-1 fw-bold" style="color: #dc3545;">404</h1>
-            <h2 class="error-message">Ups! Halaman yang Anda cari tidak ada.</h2>
-            <p class="error-message">Mungkin telah dipindahkan atau dihapus.</p>
-            <!-- Tombol untuk kembali ke homepage -->
-            <button onclick="window.location.href='/dashboard'" class="btn btn-primary">
-                Kembali ke Beranda</button>
-        </div>
+        <img src="https://st4.depositphotos.com/4967103/22006/v/450/depositphotos_220068572-stock-illustration-dinosaur-404-error-tee-print.jpg" alt="Dinosaur" class="dinosaur-image">
+        <h1>404 Not Found</h1>
+        <p>Ups! Halaman yang Anda cari telah punah!!</p>
+        <a href="/dashboard" class="home-link">Return to Home</a>
     </div>
 </body>
-@livewireScripts
 </html>

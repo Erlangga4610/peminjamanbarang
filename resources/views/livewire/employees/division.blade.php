@@ -30,9 +30,11 @@
             </div>
             @endif
 
+            @can('create-division')
             <button type="button" class="btn mb-3 btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#formModal" wire:click="create" >
                 Tambah Divisi
             </button>
+            @endcan
 
             <div class="mb-1">
                 <input type="text" class="form-control" name="query" placeholder="Cari Barang" wire:model.live.debounce.100ms="search">
@@ -58,12 +60,16 @@
                             <tr>
                                 <td>{{ $value->name }}</td> 
                                 <td>
+                                    @can('edit-division')
                                     <button wire:click="edit({{$value->id}})"  data-bs-toggle="modal" data-bs-target="#formModal">
                                         <i class="fa fa-edit"></i>
                                     </button>
+                                    @endcan
+                                    @can('delete-division')
                                     <button wire:click="confirmdelete({{$value->id}})" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                         <i class="fa fa-trash"></i>
                                     </button>
+                                    @endcan
                                      
                                 </td>  
                             </tr>

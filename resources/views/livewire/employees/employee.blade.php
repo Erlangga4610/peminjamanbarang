@@ -29,9 +29,12 @@
                 </div>
             @endif
 
+            @can('create-employee')
             <button type="button" class="btn mb-3 btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#formModal" wire:click="create">
                 Tambah Karyawan
             </button>
+            @endcan
+
             @can('item-create')
             <button type="button" class="btn mb-3 btn-sm btn-primary" onclick="window.location='/division'">
                 Tambah Divisi
@@ -77,8 +80,12 @@
                                 <td>{{ $value->status == 0 ? 'Active' : 'Inactive' }}</td>
                                 <td><img src="{{ asset('storage/'.$value->image) }}" class="img-fluid" style="max-width: 50px; height: auto;" alt="Image"></td>
                                 <td>
+                                    @can('edit-employee')
                                     <button wire:click="edit({{ $value->id }})" ><i class="fa fa-edit"></i></button>
+                                    @endcan
+                                    @can('delete-employee')
                                     <button wire:click="confirmDelete({{ $value->id }})" ><i class="fa fa-trash"></i></button>
+                                    @endcan
                                 </td>
                             </tr>
                         @empty

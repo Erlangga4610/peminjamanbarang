@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Borrowing extends Model
 {
-    protected $fillable = ['user_id', 'employee_id', 'tanggal_pinjam', 'tanggal_kembali'];
+    protected $fillable = ['user_id', 'employee_id', 'tanggal_pinjam', 'tanggal_kembali', 'status'];
 
     // Relasi Many-to-Many dengan Item
     public function items()

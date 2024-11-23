@@ -45,6 +45,7 @@
                 <th>Tanggal Pinjam</th>
                 <th>Tanggal Kembali</th>
                 <th>Items</th>
+                <th>Status</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -59,12 +60,14 @@
                             {{ $item->name }}<br>
                         @endforeach
                     </td>
+                    <td style="color: {{ $borrowing->status == 0 ? 'green' : 'red' }}">
+                        {{ $borrowing->status == 0 ? 'Sudah Dikembalikan' : 'Belum Dikembalikan' }}
+                    </td>
                     <td>
                         <button wire:click="edit({{ $borrowing->id }})" data-bs-toggle="modal"data-bs-target="#formModal"><i class="fa fa-edit"></i></button>
                         <button wire:click="confirmDelete({{ $borrowing->id }})" data-bs-toggle="modal" data-bs-target="#deleteModal">
                             <i class="fa fa-trash" ></i> 
                         </button>
-                        
                     </td>
                 </tr>
             @endforeach
@@ -121,6 +124,16 @@
                             <input type="date" wire:model="tanggal_kembali" id="tanggal_kembali" class="form-control" required>
                             @error('tanggal_kembali') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
+
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-control" wire:model="status" id="status" required>
+                                <option value="" disabled selected>Pilih Status</option>
+                                <option value="0">Sudah Dikembalikan</option>
+                                <option value="1">Belum Dikembalikan</option>
+                            </select>
+                            @error('status') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>  
                        
                     </div>
                     <div class="modal-footer">
@@ -144,7 +157,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Apakah Anda yakin ingin menghapus Barang ?</p>
+                    <p>Apakah Anda yakin ingin menghapus "{{$employee->name}}" ?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
