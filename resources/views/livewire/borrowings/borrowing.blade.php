@@ -34,32 +34,41 @@
     </button> 
 
     <div class="mb-1">
-        <input type="text" class="form-control" name="query" placeholder="Cari Barang" wire:model.live.debounce.100ms="search">
+        <input type="text" class="form-control" name="query" placeholder="Cari Data" wire:model.live.debounce.20ms="search">
     </div>
 
+    <!-- Tabel Peminjaman -->
     <!-- Tabel Peminjaman -->
     <table class="table table-striped mt-4 table-bordered">
         <thead>
             <tr>
-                <th>Nama Karyawan</th>
+                <th>Nama Peminjam</th>
+                <th>Barang Yang Dipinjam</th>
+                <th>Gambar Barang</th> 
                 <th>Tanggal Pinjam</th>
                 <th>Tanggal Kembali</th>
-                <th>Items</th>
                 <th>Status</th>
-                <th>Aksi</th>
+                <th scope="col">Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($borrowings as $borrowing)
+            @forelse($borrowings as $borrowing)
                 <tr>
-                    <td>{{$borrowing->employee->name }}</td>
-                    <td>{{ $borrowing->tanggal_pinjam }}</td>
-                    <td>{{ $borrowing->tanggal_kembali }}</td>
+                    <td>{{ $borrowing->employee->name }}</td>
                     <td>
                         @foreach($borrowing->items as $item)
                             {{ $item->name }}<br>
                         @endforeach
                     </td>
+                    
+                    <td>
+                        @foreach($borrowing->items as $item)
+                            <img src="{{ asset('/storage/'.$item->image) }}" class="rounded" style="max-width: 50px; height: auto;">
+                        @endforeach
+                    </td>                    
+                    <td>{{ $borrowing->tanggal_pinjam }}</td>
+                    <td>{{ $borrowing->tanggal_kembali }}</td>
+                
                     <td style="color: {{ $borrowing->status == 0 ? 'green' : 'red' }}">
                         {{ $borrowing->status == 0 ? 'Sudah Dikembalikan' : 'Belum Dikembalikan' }}
                     </td>
@@ -70,7 +79,14 @@
                         </button>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <!-- Pesan Data Tidak Ditemukan -->
+                <tr>
+                    <td colspan="7" class="text-center text-danger">
+                        Data Yang Anda Cari tidak Ada
+                    </td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 
@@ -110,6 +126,7 @@
                             </select>
                             @error('items') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
+
                         
                         <!-- Tanggal Pinjam -->
                         <div class="mb-3">
@@ -202,6 +219,7 @@
         font-size: 14px; /* Adjust icon size */
         margin-right: 5px; /* Add some spacing between icon and text */
         }
+        
     </style>
 
     

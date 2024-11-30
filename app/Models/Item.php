@@ -23,5 +23,8 @@ class Item extends Model
     public function borrowings()
     {
         return $this->belongsToMany(Borrowing::class,'item_borrowing', 'item_id', 'borrowing_id');
+        return $this->belongsToMany(Borrowing::class, 'borrow_item')
+                    ->withPivot('jumlah_barang') // Mengakses kolom jumlah_barang di tabel pivot
+                    ->withTimestamps();
     }
 }

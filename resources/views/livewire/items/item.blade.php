@@ -52,6 +52,7 @@
                 <table class="table table-striped table-bordered">
                     <thead class="bg-dark text-white">
                         <tr>
+                            <th scope="col">Image</th>
                             <th scope="col" wire:click="sort('name')" style="cursor: pointer;">
                                 Name
                                 @if ($sortBy === 'name')
@@ -59,7 +60,7 @@
                                 @endif
                             </th>
                             <th scope="col">kategori</th>
-                            <th scope="col">Image</th>
+                           
                             <th scope="col">Jumlah</th>
                             <th scope="col">Aksi</th>
                         </tr>
@@ -67,12 +68,13 @@
                     <tbody>
                         @forelse ($items as $item)
                             <tr>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->category ? $item->category->name : 'Tanpa Kategori' }}
-                                </td>
                                 <td class="">
                                     <img src="{{ asset('/storage/'.$item->image) }}" class="rounded" style="max-width: 50px; height: auto;">
                                 </td>   
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->category ? $item->category->name : 'Tanpa Kategori' }}
+                                </td>
+                                
                                 <td>{{ $item->jumlah }}</td>
                                 <td>
                                     @can('item-edit')

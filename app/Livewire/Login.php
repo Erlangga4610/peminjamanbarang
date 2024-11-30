@@ -29,7 +29,6 @@ class Login extends Component
         //validasi 
         $this->validate();
 
-
         if (Auth::attempt([
             'email' => $this->email,
             'password' => $this->password
@@ -37,7 +36,7 @@ class Login extends Component
             return $this->redirect('/dashboard');
         }
 
-        session()->flash('error', 'Login failed');
+        session()->flash('error', 'Login Gagal');
 
 
         return $this->redirect('/login');

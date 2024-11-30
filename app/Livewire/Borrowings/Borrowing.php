@@ -14,6 +14,7 @@ class Borrowing extends Component
     public $tanggal_pinjam, $tanggal_kembali, $borrowId, $employee_id, $item_id, $status;
     public $modal_title = '';
     public $mode = '';
+    public $search = '';
 
     protected $rules = [
         'tanggal_pinjam' => 'required|date',
@@ -52,7 +53,7 @@ class Borrowing extends Component
         ]);
 
         $borrowing->items()->sync($this->item_id);
-
+        
         $this->resetInputFields();
         $this->dispatch('close-modal');
         session()->flash('message', 'Borrowing added successfully!');
@@ -77,34 +78,33 @@ class Borrowing extends Component
     }
 
     public function update()
-{
-    $this->validate();
-    // dd($this->tanggal_pinjam, $this->tanggal_kembali, $this->employee_id, $this->item_id);
+    {
+        $this->validate();
+        // dd($this->tanggal_pinjam, $this->tanggal_kembali, $this->employee_id, $this->item_id);
 
 
-    $borrow = Borrow::findOrFail($this->borrowId);
+        $borrow = Borrow::findOrFail($this->borrowId);
 
-    $borrow->update([
-        'tanggal_pinjam' => $this->tanggal_pinjam,
-        'tanggal_kembali' => $this->tanggal_kembali,
-        'employee_id' => $this->employee_id,
-        'status' => $this->status,
-    ]);
+        $borrow->update([
+            'tanggal_pinjam' => $this->tanggal_pinjam,
+            'tanggal_kembali' => $this->tanggal_kembali,
+            'employee_id' => $this->employee_id,
+            'status' => $this->status,
+        ]);
 
-    // Tangani item berdasarkan situasi
-    // Jika $this->item_id adalah array (beberapa item), gunakan sinkronisasi
-    if (is_array($this->item_id)) {
-        $borrow->items()->sync($this->item_id); // Ini menyinkronkan beberapa item
-    } else {
-        $borrow->items()->sync([$this->item_id]); // Sinkronkan satu item sebagai array
+        // Tangani item berdasarkan situasi
+        // Jika $this->item_id adalah array (beberapa item), gunakan sinkronisasi
+        if (is_array($this->item_id)) {
+            $borrow->items()->sync($this->item_id); // Ini menyinkronkan beberapa item
+        } else {
+            $borrow->items()->sync([$this->item_id]); // Sinkronkan satu item sebagai array
+        }
+
+        
+        $this->resetInputFields();
+        $this->dispatch('close-modal');
+        session()->flash('message', 'Borrowing updated successfully!');
     }
-
-    
-    $this->resetInputFields();
-    $this->dispatch('close-modal');
-    session()->flash('message', 'Borrowing updated successfully!');
-}
-
 
     public function confirmDelete($borrowId)
     {
@@ -121,15 +121,34 @@ class Borrowing extends Component
         session()->flash('message', 'Borrowing deleted successfully!');
     }
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
-        $items = Item::all(); 
+        $borrowings = Borrow::with('user', 'employee')
+            ->when($this->search, function ($query) {
+                $query->where('tanggal_pinjam', 'like', '%'.$this->search.'%')
+                      ->orWhere('tanggal_kembali', 'like', '%'.$this->search.'%')
+                      ->orWhereHas('employee', function ($query) {
+                          $query->where('name', 'like', '%'.$this->search.'%'); 
+                      })
+                      ->orWhereHas('items', function ($query) {
+                          $query->where('name', 'like', '%'.$this->search.'%'); 
+                      });
+            })
+            ->paginate(10);
 
-        return view('livewire.borrowings.borrowing', [
-            'borrowings' => Borrow::with('user', 'employee')->paginate(10),
-            'employees' => Employee::all(),
-            'items' => $items 
-        ]);
+            $items = Item::all(); 
+            $employees = Employee::all();
+    
+            return view('livewire.borrowings.borrowing', [
+                'borrowings' => $borrowings,
+                'employees' => $employees,
+                'items' => $items,
+            ]);
     }
 
 }

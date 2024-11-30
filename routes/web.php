@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Livewire\AccountSettings;
 
 // Route untuk halaman utama
 Route::get('/', function () {
@@ -18,6 +19,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/employee', App\Livewire\Employees\Employee::class);
     Route::get('/division', \App\Livewire\Employees\Division::class);
     Route::get('/borrowing', \App\Livewire\Borrowings\Borrowing::class);
+    Route::get('/account-settings', AccountSettings::class)->name('account.settings');
+
 
 
     Route::post('/logout', function () {

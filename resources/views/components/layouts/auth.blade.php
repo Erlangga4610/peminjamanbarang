@@ -57,7 +57,7 @@
               </div><!-- End Logo -->
 
               
-              @livewire('login')
+              {{$slot}}
 
 
               <div class="credits">
