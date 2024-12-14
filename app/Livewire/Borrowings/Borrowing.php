@@ -15,6 +15,7 @@ class Borrowing extends Component
     public $modal_title = '';
     public $mode = '';
     public $search = '';
+    public $borrowName;
 
     protected $rules = [
         'tanggal_pinjam' => 'required|date',
@@ -109,6 +110,8 @@ class Borrowing extends Component
     public function confirmDelete($borrowId)
     {
         $this->borrowId = $borrowId;
+        $borrow = Borrow::with('employee')->find($borrowId);
+        $this->borrowName = $borrow ? $borrow->employee->name : null;
         $this->dispatch('openDeleteModal');
     }
 

@@ -1,8 +1,6 @@
 <div>
     <h1>Account Settings</h1>
 
-    
-
        {{-- Success Message --}}
         @if (session()->has('message'))
             <div class="toast-container top-0 end-0 p-3">

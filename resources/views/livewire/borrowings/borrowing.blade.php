@@ -126,7 +126,6 @@
                             </select>
                             @error('items') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-
                         
                         <!-- Tanggal Pinjam -->
                         <div class="mb-3">
@@ -174,8 +173,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Apakah Anda yakin ingin menghapus "{{$employee->name}}" ?</p>
-                </div>
+                    <p>Apakah Anda yakin ingin menghapus "<strong>{{ $borrowName }}</strong>" ?</p>
+                </div>                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button wire:click="destroy" class="btn btn-danger">Hapus</button>

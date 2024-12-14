@@ -17,6 +17,7 @@ class Division extends Component
     protected $paginationTheme = 'bootstrap';
     public $sortBy = 'name'; //kolom default untuk sorting
     public $sortDirection = 'asc';
+    public $div_name;
 
     public function resetInputFields()
     {
@@ -79,6 +80,8 @@ class Division extends Component
     public function confirmdelete($div_id)
     {   
         $this->div_id = $div_id;
+        $divisi = Divisi::find($div_id);
+        $this->div_name = $divisi ? $divisi->name : null;
         $this->dispatch('close-modal');
     }
 

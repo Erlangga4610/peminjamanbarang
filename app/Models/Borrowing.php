@@ -13,7 +13,7 @@ class Borrowing extends Model
     public function items()
     {
         // Pastikan nama tabel pivot adalah 'item_borrowing' dengan kolom 'borrowing_id' dan 'item_id'
-        return $this->belongsToMany(Item::class, 'item_borrowing', 'borrowing_id', 'item_id');
+        return $this->belongsToMany(Item::class, 'item_borrowing', 'borrowing_id', 'item_id')->withPivot('quantity');
     }
 
     // Relasi Many-to-One dengan User

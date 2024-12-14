@@ -24,6 +24,7 @@ class Employee extends Component
     protected $paginationTheme = 'bootstrap';
     public $sortBy = 'nik'; //kolom default untuk sorting
     public $sortDirection = 'asc';
+    public $EmployName;
 
     public function resetInputFields()
     {
@@ -151,6 +152,8 @@ class Employee extends Component
     public function confirmDelete($employeId)
     {
         $this->employeId = $employeId;
+        $employ = Employe::find($employeId);
+        $this->EmployName = $employ ? $employ->name : null;
         $this->dispatch('openDeleteModal');
     }
 

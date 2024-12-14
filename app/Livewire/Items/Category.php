@@ -18,6 +18,7 @@ class Category extends Component
     protected $paginationTheme = 'bootstrap';
     public $sortBy = 'name'; //kolom default untuk sorting
     public $sortDirection = 'asc';
+    public $itemName;
 
     public function create()
     {
@@ -75,6 +76,8 @@ class Category extends Component
     public function confirmdelete($kat_id)
     {   
         $this->kat_id = $kat_id;
+        $item = Categori::find($kat_id);
+        $this->itemName = $item ? $item->name : null;
         $this->dispatch('close-modal');
     }
 

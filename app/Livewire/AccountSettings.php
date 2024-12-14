@@ -22,6 +22,7 @@ class AccountSettings extends Component
 
     public function updateSettings()
     {
+        // Aturan validasi
         $rules = [
             'name' => 'required|string|max:255',
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore(Auth::id())],
@@ -29,31 +30,52 @@ class AccountSettings extends Component
             'new_password' => 'nullable|min:8|confirmed',
         ];
 
-        // Validate the form input
+        // Validasi input form
         $this->validate($rules);
 
+        // Cek apakah password saat ini sesuai
         if (!Hash::check($this->current_password, Auth::user()->password)) {
-            session()->flash('error', 'Current password is incorrect.');
+            session()->flash('error', 'Password saat ini salah.');
             return;
         }
 
+        // Mendapatkan pengguna yang terautentikasi
         $user = Auth::user();
 
+        // Memeriksa apakah $user adalah instance dari model User
+        if (!$user instanceof \App\Models\User) {
+            throw new \Exception('User bukan instance dari model User.');
+        }
+
+        // Menyiapkan data untuk diupdate
         $data = [
             'name' => $this->name,
             'email' => $this->email,
         ];
 
+        // Jika ada password baru, update password
         if ($this->new_password) {
             $data['password'] = Hash::make($this->new_password);
         }
 
-        // Update the user
+        // Mengupdate data pengguna
         $user->update($data);
+        
+        // Reset semua field terkait password
+        $this->resetInputFields();
 
-        // Flash success message
-        session()->flash('message', 'Account settings updated successfully.');
+        // Menampilkan pesan sukses
+        session()->flash('message', 'Pengaturan akun berhasil diperbarui.');
     }
+
+    public function resetInputFields()
+    {
+        // Reset semua field password
+        $this->current_password = '';
+        $this->new_password = '';
+        $this->new_password_confirmation = '';
+    }
+
 
     public function render()
     {

@@ -24,6 +24,8 @@ class Item extends Component
     protected $paginationTheme = 'bootstrap';
     public $sortBy = 'name'; //kolom default untuk sorting
     public $sortDirection = 'asc';
+    public $itemName; // add
+
     
 
     // Reset input fields setelah create or update
@@ -150,6 +152,8 @@ class Item extends Component
     public function confirmDelete($itemId)
     {
         $this->itemId = $itemId;
+        $item = ItemModel::find($itemId);
+        $this->itemName = $item ? $item->name : null; // Set the item name to the property
         $this->dispatch('close-modal');
     }
 
